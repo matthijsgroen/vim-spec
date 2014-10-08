@@ -82,7 +82,7 @@ function! RunSpecs(spec)
   if InJsSpec(a:spec)
     let filename_for_spec = substitute(a:spec, "spec/javascripts/", "", "")
     execute substitute(g:konacha_command, "{spec}", filename_for_spec, "g")
-  elseif InCucumberFile(spec)
+  elseif InCucumberFile(a:spec)
     execute substitute(g:cucumber_command, "{spec}", a:spec, "g")
   else
     execute substitute(g:rspec_command, "{spec}", a:spec, "g")
