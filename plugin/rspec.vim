@@ -35,7 +35,7 @@ function! RestartSpring()
 endfunction
 
 function! RunCurrentSpecFile()
-  if InSpecFile() || InCucumberFile() || InJsSpec()
+  if InSpecFile(expand('%')) || InCucumberFile(expand('%')) || InJsSpec(expand('%'))
     let l:spec = @%
     call SetLastSpecCommand(l:spec)
     call RunSpecs(l:spec)
@@ -45,7 +45,7 @@ function! RunCurrentSpecFile()
 endfunction
 
 function! RunNearestSpec()
-  if InSpecFile() || InCucumberFile() || InJsSpec()
+  if InSpecFile(expand('%')) || InCucumberFile(expand('%')) || InJsSpec(expand('%'))
     let l:spec = @% . ":" . line(".")
     call SetLastSpecCommand(l:spec)
     call RunSpecs(l:spec)
@@ -60,16 +60,16 @@ function! RunLastSpec()
   endif
 endfunction
 
-function! InSpecFile()
-  return match(expand("%"), "_spec.rb$") != -1
+function! InSpecFile(file)
+  return match(file, "_spec.rb$") != -1
 endfunction
 
-function! InCucumberFile()
-  return match(expand("%"), ".feature$") != -1
+function! InCucumberFile(file)
+  return match(file, ".feature$") != -1
 endfunction
 
-function! InJsSpec()
-  return match(expand("%"), "_spec.js.coffee$") != -1
+function! InJsSpec(file)
+  return match(file, "_spec.js.coffee$") != -1
 endfunction
 
 function! SetLastSpecCommand(spec)
@@ -77,10 +77,10 @@ function! SetLastSpecCommand(spec)
 endfunction
 
 function! RunSpecs(spec)
-  if InJsSpec()
+  if InJsSpec(spec)
     let filename_for_spec = substitute(a:spec, "spec/javascripts/", "", "")
     execute substitute(g:konacha_command, "{spec}", filename_for_spec, "g")
-  elseif InCucumberFile()
+  elseif InCucumberFile(spec)
     execute substitute(g:cucumber_command, "{spec}", a:spec, "g")
   else
     execute substitute(g:rspec_command, "{spec}", a:spec, "g")
