@@ -63,15 +63,15 @@ function! RunLastSpec()
 endfunction
 
 function! InSpecFile(file)
-  return match(a:file, "_spec.rb$") != -1
+  return match(a:file, "_spec.rb(:\d+|)$") != -1
 endfunction
 
 function! InCucumberFile(file)
-  return match(a:file, ".feature$") != -1
+  return match(a:file, ".feature(:\d+|)$") != -1
 endfunction
 
 function! InJsSpec(file)
-  return match(a:file, "_spec.js.coffee$") != -1
+  return match(a:file, "_spec.js.coffee(:\d+|)$") != -1
 endfunction
 
 function! SetLastSpecCommand(spec)
