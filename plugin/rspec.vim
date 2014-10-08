@@ -45,7 +45,8 @@ function! RunCurrentSpecFile()
 endfunction
 
 function! RunNearestSpec()
-  if InSpecFile(expand('%')) || InCucumberFile(expand('%')) || InJsSpec(expand('%'))
+  let l:file = expand('%')
+  if InSpecFile(l:file) || InCucumberFile(l:file) || InJsSpec(l:file)
     let l:spec = @% . ":" . line(".")
     call SetLastSpecCommand(l:spec)
     call RunSpecs(l:spec)
