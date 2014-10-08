@@ -63,15 +63,18 @@ function! RunLastSpec()
 endfunction
 
 function! InSpecFile(file)
-  return match(a:file, "_spec.rb$") != -1
+  let stripped_linenr = substitute(a:file, "\:\d\+$", "", "")
+  return match(stripped_linenr, "_spec.rb$") != -1
 endfunction
 
 function! InCucumberFile(file)
-  return match(a:file, ".feature$") != -1
+  let stripped_linenr = substitute(a:file, "\:\d\+$", "", "")
+  return match(stripped_linenr, ".feature$") != -1
 endfunction
 
 function! InJsSpec(file)
-  return match(a:file, "_spec.js.coffee$") != -1
+  let stripped_linenr = substitute(a:file, "\:\d\+$", "", "")
+  return match(stripped_linenr, "_spec.js.coffee$") != -1
 endfunction
 
 function! SetLastSpecCommand(spec)
